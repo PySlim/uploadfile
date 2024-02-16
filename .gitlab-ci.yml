@@ -1,0 +1,22 @@
+image: ubuntu:latest
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  before_script:
+    - apt-get update
+    - apt-get install openssh-server -y
+    - systemctl enable ssh
+    - mkdir -p ~/.ssh
+    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - bash .gitlab-deploy.sh
+  environment:
+      name: environment_production
+      url: http://34.67.219.65:3000
+  only:
+    - main
