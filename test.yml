@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./compose/develop/Dockerfile
+    ports:
+      - "5500:5500"
+    depends_on:
+      - postgres
+    environment:
+      - ./.envs/.test/.node
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - ./.envs/.test/.postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
