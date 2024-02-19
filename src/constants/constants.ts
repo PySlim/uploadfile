@@ -1,6 +1,6 @@
 export class ConstantsModule {
     static readonly PROTOCOL:string = 'http://'
-    static readonly SERVER_HOST: string = '3.143.142.76';
+    static readonly SERVER_HOST: string = '18.118.215.117';
     static readonly PORT: number = 5500;
     static readonly LIMIT_PAGINATION: string='50'
 }
