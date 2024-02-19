@@ -8,6 +8,7 @@ import DataErrorData from "../data/dataError.data";
 import {userValidateSchema} from "../../users/model/user.validate.model";
 import UserData from "../../users/data/user.data";
 import {userInterfaceData} from "../../users/model/users.object.models";
+import * as argon2 from "argon2";
 
 class DataErrorService implements  DataErrorServiceInterface{
 
@@ -15,6 +16,7 @@ class DataErrorService implements  DataErrorServiceInterface{
         try{
             dataError.age=dataError.age.toString()
             const dataValidated = userValidateSchema.parse(dataError);
+            dataValidated.password=await argon2.hash(dataValidated.password)
             const user: userInterfaceData =await UserData.Create(dataValidated, next)
             if(user){
                 await DataErrorData.Update(id,{status:false}, next)

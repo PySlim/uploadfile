@@ -105,7 +105,6 @@ class DocumentService implements  DocumentServiceInterface{
             await ErrorData.Create(dataBodyError, next)
         }
     }
-
     private async VerifyRoleUser(req: Request, next:NextFunction){
         const idUser = req.id as string
         const userSearch: userInterfaceData = await UserData.GetUserById(idUser, next)
@@ -175,6 +174,9 @@ class DocumentService implements  DocumentServiceInterface{
             if(!user) return
             const documentsIds: DocumentIdsInterface[] = await DataErrorData.GetDataErrorByDocument(next)
             const idArray = documentsIds.map((item)=>item.document_id);
+            if(idArray.length === 0){
+                return []
+            }
             const idString = idArray.join(',');
             return await DocumentData.GetDocumentWhitError(`(${idString})`, next)
         } catch (error) {

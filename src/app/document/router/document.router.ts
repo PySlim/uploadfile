@@ -19,7 +19,6 @@ class DocumentRouter implements  RouterInterface{
         this.router.get('/', ValidateIdentityMiddleware(), DocumentController.List)// LIS DOCUMENT
         this.router.get('/error',ValidateIdentityMiddleware(), DocumentController.GetDocumentWhitError);
         this.router.get('/error/:id',ValidateIdentityMiddleware(), DocumentController.GetErrorByDocument);
-        this.router.get('/:id', ValidateIdentityMiddleware(), DocumentController.Retrieve);
     }
 }
 
